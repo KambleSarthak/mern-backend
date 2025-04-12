@@ -1,7 +1,6 @@
-import express from "express";
+import express from 'express';
 import { auth } from "../middlewares/authMiddleware.js";
-// const { Chat } = require("../models/chat");
-import Chat  from "../models/chat.js";
+import { Chat } from "../models/chat.js";
 
 const chatRouter = express.Router();
 
@@ -32,5 +31,4 @@ chatRouter.get("/:targetUserId",auth, async (req, res) => {
   }
 });
 
-// module.exports = chatRouter;
 export default chatRouter;

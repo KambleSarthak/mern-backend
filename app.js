@@ -11,25 +11,14 @@ import chatRouter from './routes/chat.js';
 
 dotenv.config();
 const app = express();
-const cors = require("cors");
+
 app.use(express.json());
-app.use(cors({
-    origin:"*",
-    methods:["GET","POST","DELETE","UPDATE","PUT","PATCH"],
-    credentials: true,
-}))
 
-app.get('/',(req,res)=>{
-    res.json({message:'Welcome to Travel buddy server'});
-})
-
-const cors = require('cors');
-
-// CORS configuration
+// Single CORS configuration
 app.use(cors({
     origin: [
         'https://mern-frontend-beta.vercel.app',
-        'http://localhost:3000'  // for local development
+        'http://localhost:3000'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
@@ -37,8 +26,9 @@ app.use(cors({
     exposedHeaders: ['*', 'Authorization']
 }));
 
-// Make sure this CORS configuration is placed BEFORE your routes
-
+app.get('/',(req,res)=>{
+    res.json({message:'Welcome to Travel buddy server'});
+})
 
 app.use('/api',authRoutes);
 app.use('/api/trips',auth,tripRoutes);

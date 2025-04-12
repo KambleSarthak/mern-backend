@@ -12,12 +12,17 @@ const getSecretRoomId = (userId, targetUserId) => {
 const initializeSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "*",
-    },
+      origin: [
+        'https://mern-frontend-beta.vercel.app',
+        'http://localhost:3000'
+      ],
+      methods: ["GET", "POST"],
+      credentials: true
+    }
   });
 
   io.on("connection", (socket) => {
-    console.log("hi")
+    console.log("hi");
     socket.on("joinChat", ({ firstname, userId, targetUserId }) => {
       const roomId = getSecretRoomId(userId, targetUserId);
       console.log(firstname + " joined Room : " + roomId);
@@ -32,7 +37,7 @@ const initializeSocket = (server) => {
           const roomId = getSecretRoomId(userId, targetUserId);
           console.log(firstname + " " + text);
 
-        //   TODO: Check if userId & targetUserId are friends
+          //   TODO: Check if userId & targetUserId are friends
 
           let chat = await Chat.findOne({
             participants: { $all: [userId, targetUserId] },
@@ -60,7 +65,8 @@ const initializeSocket = (server) => {
 
     socket.on("disconnect", () => {});
   });
+
+  return io;
 };
 
-// module.exports = initializeSocket;
 export default initializeSocket;
