@@ -16,8 +16,10 @@ const initializeSocket = (server) => {
         'https://mern-frontend-beta.vercel.app',
         'http://localhost:3000'
       ],
-      methods: ["GET", "POST"],
-      credentials: true
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      credentials: true,
+      allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+      exposedHeaders: ['*', 'Authorization']
     }
   });
 
