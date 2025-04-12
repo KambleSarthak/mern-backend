@@ -23,6 +23,23 @@ app.get('/',(req,res)=>{
     res.json({message:'Welcome to Travel buddy server'});
 })
 
+const cors = require('cors');
+
+// CORS configuration
+app.use(cors({
+    origin: [
+        'https://mern-frontend-beta.vercel.app',
+        'http://localhost:3000'  // for local development
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+    exposedHeaders: ['*', 'Authorization']
+}));
+
+// Make sure this CORS configuration is placed BEFORE your routes
+
+
 app.use('/api',authRoutes);
 app.use('/api/trips',auth,tripRoutes);
 app.use('/api/chat',chatRouter);
